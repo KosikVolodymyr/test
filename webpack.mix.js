@@ -15,22 +15,22 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
    
 mix.styles([
-    'resources/assets/front/css/bootstrap.min.css',
-    'resources/assets/front/css/font-awesome.min.css',
-    'resources/assets/front/css/animate.min.css',
-    'resources/assets/front/css/owl.carousel.css',
-    'resources/assets/front/css/owl.theme.css',
-    'resources/assets/front/css/owl.transitions.css',
-    'resources/assets/front/css/style.css',
-    'resources/assets/front/css/responsive.css'
+    'resources/assets/css/bootstrap.min.css',
+    'resources/assets/css/font-awesome.min.css',
+    'resources/assets/css/animate.min.css',
+    'resources/assets/css/owl.carousel.css',
+    'resources/assets/css/owl.theme.css',
+    'resources/assets/css/owl.transitions.css',
+    'resources/assets/css/style.css',
+    'resources/assets/css/responsive.css'
 ], 'public/css/front.css');
 
 mix.scripts([
-    'resources/assets/front/js/jquery-1.11.3.min.js',
-    'resources/assets/front/js/bootstrap.min.js',
-    'resources/assets/front/js/owl.carousel.min.js',
-    'resources/assets/front/js/jquery.stickit.min.js',
-    'resources/assets/front/js/scripts.js'
+    'resources/assets/js/jquery-1.11.3.min.js',
+    'resources/assets/js/bootstrap.min.js',
+    'resources/assets/js/owl.carousel.min.js',
+    'resources/assets/js/jquery.stickit.min.js',
+    'resources/assets/js/scripts.js'
 ], 'public/js/front.js');
 
-mix.copy('resources/assets/front/fonts', 'public/fonts');
+mix.copy('resources/assets/fonts', 'public/fonts');
