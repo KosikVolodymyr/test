@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use Auth;
+use App\Http\Requests\AuthRegister;
+use App\Http\Requests\AuthLogin;
 
 class AuthController extends Controller
 {
@@ -13,15 +14,9 @@ class AuthController extends Controller
         return view('pages.register');
     }
     
-    public function register(Request $request)
+    public function register(AuthRegister $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:150||username',
-            'email' => 'required|email|unique:users|max:60',
-            'password' => 'required|max:20'
-        ]);
-        
-        $user = User::add($request->all());
+        User::add($request->all());
         
         return redirect()->route('loginForm');
     }
@@ -31,27 +26,22 @@ class AuthController extends Controller
         return view('pages.login');
     }
     
-    public function login(Request $request)
+    public function login(AuthLogin $request)
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-        
         $auth = Auth::attempt([
             'email' => $request->get('email'),
             'password' => $request->get('password')
         ]);
                 
-        if($auth)
-        {
+        if ($auth) {
            return redirect('/'); 
         }
         
         return redirect()->back()->with('status', 'Incorrect login or password');
     }
     
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         
         return redirect('/');

@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
-    private $rules = [
-        'name' => 'required|max:50'
-    ];
-    
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
@@ -40,9 +36,8 @@ class CategoryController extends Controller
         return view('pages.category.create');
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate($request, $this->rules);
         Category::add($request->all());
         
         return redirect()->route('category.index');
@@ -51,37 +46,36 @@ class CategoryController extends Controller
     public function edit($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        if($category->user_id == Auth::user()->id)
-        {
+        if ($category->user_id == Auth::user()->id) {
             return view('pages.category.edit', ['category' => $category]);
         }
+        
         return redirect()->back();
     }
 
-    public function update(Request $request, $slug)
+    public function update(CategoryRequest $request, $slug)
     {
-        $this->validate($request, $this->rules);
         $category = Category::where('slug', $slug)->firstOrFail();
-        if($category->user_id == Auth::user()->id)
-        {
+        if ($category->user_id == Auth::user()->id) {
             $category->update($request->all());
         
             return redirect()->route('category.index');
         }
+        
         return redirect()->back();
     }
 
     public function destroy($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        if($category->user_id == Auth::user()->id)
-        {
+        if ($category->user_id == Auth::user()->id) {
             $category->posts()->update(['category_id' => null]);
             $category->comments()->delete();
             $category->delete();
         
             return redirect()->route('category.index');
         }
+        
         return redirect()->back();
     }
 }
