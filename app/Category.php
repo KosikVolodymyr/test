@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Post;
-use Illuminate\Support\Facades\Auth;
 
 class Category extends Model
 {
@@ -13,15 +12,18 @@ class Category extends Model
     
     protected $fillable = ['name', 'description'];
 
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
     
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
     
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(CommentCategory::class)->orderBy('created_at', 'DESC');
     }
     
@@ -33,18 +35,9 @@ class Category extends Model
             ]
         ];
     }
-    
-    public static function add($attributes) 
-    {
-        $category = new static;
-        $category->fill($attributes);
-        $category->user_id = Auth::user()->id;
-        $category->save();
-        
-        return $category;
-    }
 
-    public function getDate() {
+    public function getDate()
+    {
         return $this->created_at->format('F d, Y');
     }
 }

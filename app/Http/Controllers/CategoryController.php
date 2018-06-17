@@ -38,7 +38,10 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        Category::add($request->all());
+        $category = new Category();
+        $category->fill($request->all());
+        $category->user_id = Auth::user()->id;
+        $category->save();
         
         return redirect()->route('category.index');
     }

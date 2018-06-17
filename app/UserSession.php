@@ -8,14 +8,8 @@ class UserSession extends Model
 {
     protected $fillable = ['session_id', 'user_ip', 'browser'];
     
-    public static function add($attributes)
+    public static function getBrowsersCount()
     {
-        $session = new static;
-        $session->fill($attributes);
-        $session->save();
-    }
-    
-    public static function getBrowsersCount() {
         return \DB::table('user_sessions')
             ->select('browser as name', \DB::raw('count(*) as total'))
             ->groupBy('browser')

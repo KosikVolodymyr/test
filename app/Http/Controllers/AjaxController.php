@@ -10,7 +10,15 @@ class AjaxController extends Controller
 {
     public function addCategoryComment(AjaxComment $request)
     {
-        $comment = CommentCategory::add($request->all());
+        $comment = new CommentCategory();
+        $comment->fill($request->all());
+        $comment->category_id = $request->all('category');
+        if (Auth::check()) {
+            $comment->user_id = Auth::user()->id;
+            $comment->author = Auth::user()->name;
+        }
+        $comment->save();
+        
         $count = CommentCategory::where('category_id', $request->get('category'))->count();
 
         return response()->json([
@@ -21,7 +29,15 @@ class AjaxController extends Controller
     
     public function addComment(AjaxComment $request)
     {
-        $comment = Comment::add($request->all());
+        $comment = new Comment();
+        $comment->fill($request->all());
+        $comment->post_id = $request->get('post');
+        if (Auth::check()) {
+            $comment->user_id = Auth::user()->id;
+            $comment->author = Auth::user()->name;
+        }
+        $comment->save();
+        
         $count = Comment::where('post_id', $request->get('post'))->count();
 
         return response()->json([

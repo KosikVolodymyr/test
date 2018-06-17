@@ -16,12 +16,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-    public static function add($attributes)
-    {
-        $user = new static;
-        $user->fill($attributes);
-        $user->password = bcrypt($attributes['password']);
-        $user->save();
-    }
 }

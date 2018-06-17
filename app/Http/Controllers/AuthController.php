@@ -16,7 +16,10 @@ class AuthController extends Controller
     
     public function register(AuthRegister $request)
     {
-        User::add($request->all());
+        $user = User();
+        $user->fill($request->all());
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
         
         return redirect()->route('loginForm');
     }

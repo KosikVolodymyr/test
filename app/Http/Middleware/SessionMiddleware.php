@@ -20,13 +20,14 @@ class SessionMiddleware
     {
         $agent = new Agent();
         
-        $atribytes['session_id'] = Session::getId();
-        $atribytes['user_ip'] = $request->ip();
-        $atribytes['browser'] = $agent->browser();
+        $attributes['session_id'] = Session::getId();
+        $attributes['user_ip'] = $request->ip();
+        $attributes['browser'] = $agent->browser();
         
-        if(UserSession::where('session_id', $atribytes['session_id'])->count() == 0)
-        {
-            UserSession::add($atribytes);
+        if (UserSession::where('session_id', $attributes['session_id'])->count() == 0) {
+            $session = new UserSession();
+            $session->fill($attributes);
+            $session->save();
         }
         
         return $next($request);
