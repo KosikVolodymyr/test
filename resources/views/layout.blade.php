@@ -75,7 +75,6 @@
                 </div>
             </div>
         </footer>
-        <script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
-        <script type="text/javascript" src="/plugins/ckfinder/ckfinder.js"></script>
+        <script type="text/javascript" src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
     </body>
 </html>
