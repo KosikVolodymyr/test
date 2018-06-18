@@ -9,17 +9,17 @@
             {!!Form::open(['class' => 'form-horizontal contact-form', 'route' => 'register', 'method' => 'post'])!!}
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{old('name')}}">
+                        {!!Form::text('name', old('name'), ['id' => 'name', 'class' => 'form-control', 'placeholder' => 'Name'])!!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{old('email')}}">
+                        {!!Form::text('email', old('email'), ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email'])!!}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        {!!Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password'])!!}
                     </div>
                 </div>
                 {!! Form::submit('Register',['class'=>'btn send-btn'])!!}

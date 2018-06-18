@@ -10,25 +10,27 @@
                         <span>({{$postsCount}})</span>
                         <a href="{{route('post.index')}}">All posts</a>
                     </li>
-                    @foreach($categories as $category)
+                    @foreach ($categories as $category)
                         <li>
                             <span>({{$category->posts()->count()}})</span>
                             <a href="{{route('category.show', $category->slug)}}">{{$category->name}}</a>
-                            @if(Auth::check())
-                                @if(Auth::user()->id == $category->user_id)
+                            @if (Auth::check())
+                                @if (Auth::user()->id == $category->user_id)
                                     <span class="post-count pull-right"> 
                                         {!!Form::open(['route' => ['category.destroy', $category->slug], 'method' => 'delete'])!!}
-                                        <a href="{{route('category.edit', $category->slug)}}"><i class="fa fa-pencil"></i></a> 
-                                        <button type="submit" class="delete" onclick="return confirm('Delete {{$category->name}} ?')">
-                                            <i class="fa fa-remove"></i>
-                                        </button>
+                                            <a href="{{route('category.edit', $category->slug)}}"><i class="fa fa-pencil"></i></a> 
+                                            {!!Form::button('<i class="fa fa-remove"></i>', [
+                                                'type' => 'submit',
+                                                'class' => 'delete',
+                                                'onclick' => 'return confirm("Delete '.$category->name.' ?")'
+                                            ])!!}
                                         {!!Form::close()!!}
                                     </span>
                                 @endif
                             @endif
                         </li>
                     @endforeach
-                    @if($nullableCategory > 0)
+                    @if ($nullableCategory > 0)
                         <li>
                             <span>({{$nullableCategory}})</span>
                             <a href="{{route('post.nonecategory')}}">Posts without category</a>

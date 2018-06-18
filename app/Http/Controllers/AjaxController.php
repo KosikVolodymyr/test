@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CommentCategory;
 Use App\Comment;
 use App\Http\Requests\AjaxComment;
+use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
 {
@@ -12,7 +13,7 @@ class AjaxController extends Controller
     {
         $comment = new CommentCategory();
         $comment->fill($request->all());
-        $comment->category_id = $request->all('category');
+        $comment->category_id = $request->get('category');
         if (Auth::check()) {
             $comment->user_id = Auth::user()->id;
             $comment->author = Auth::user()->name;

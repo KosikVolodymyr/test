@@ -79,16 +79,37 @@ textarea {
 table.table form {
     display: block;
 }
+
 button.delete {
     background: transparent;
     border: none;
     padding: 0px;
 }
+
 .cat-space {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 90%;
     overflow: hidden;
+}
+
+.form-group .col-md-12 input[type="file"] {
+    padding: 0px;
+    border: none;
+    background: none;
+}
+
+.errors {
+    margin-top: 10%;
+}
+
+.errors h1 {
+    font-size: 80px;
+}
+
+.errors span {
+    display: block;
+    font-size: 30px;
 }
 
 .media .media-left{

@@ -82,7 +82,7 @@ function(){this.reset();this.spacer.remove();this.element.removeData("jquery-sti
     
     if($('textarea').is('.ckeditor'))
     {
-        var editor = CKEDITOR.replaceAll();
+        CKEDITOR.replaceAll();
     }
     
     $.ajaxSetup({
