@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AuthRegister;
 use App\Http\Requests\AuthLogin;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+    private $authService;
+    
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+    
     public function registerForm()
     {
         return view('pages.register');
@@ -16,10 +23,7 @@ class AuthController extends Controller
     
     public function register(AuthRegister $request)
     {
-        $user = User();
-        $user->fill($request->all());
-        $user->password = bcrypt($request->get('password'));
-        $user->save();
+        $this->authService->create($request);
         
         return redirect()->route('loginForm');
     }

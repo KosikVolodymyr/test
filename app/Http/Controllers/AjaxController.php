@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\CommentCategory;
 Use App\Comment;
 use App\Http\Requests\AjaxComment;
-use Illuminate\Support\Facades\Auth;
+use App\Services\AjaxService;
 
 class AjaxController extends Controller
 {
+    private $ajaxService;
+
+    public function __construct(AjaxService $ajaxService)
+    {
+        $this->ajaxService = $ajaxService;
+    }
+    
     public function addCategoryComment(AjaxComment $request)
     {
-        $comment = new CommentCategory();
-        $comment->fill($request->all());
-        $comment->category_id = $request->get('category');
-        if (Auth::check()) {
-            $comment->user_id = Auth::user()->id;
-            $comment->author = Auth::user()->name;
-        }
-        $comment->save();
+        $comment = $this->ajaxService->createCategoryComment($request);
         
         $count = CommentCategory::where('category_id', $request->get('category'))->count();
 
@@ -30,14 +30,7 @@ class AjaxController extends Controller
     
     public function addComment(AjaxComment $request)
     {
-        $comment = new Comment();
-        $comment->fill($request->all());
-        $comment->post_id = $request->get('post');
-        if (Auth::check()) {
-            $comment->user_id = Auth::user()->id;
-            $comment->author = Auth::user()->name;
-        }
-        $comment->save();
+        $comment = $this->ajaxService->createComment($request);
         
         $count = Comment::where('post_id', $request->get('post'))->count();
 

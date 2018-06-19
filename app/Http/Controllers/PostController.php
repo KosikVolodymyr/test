@@ -6,11 +6,15 @@ use App\Post;
 use App\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostRequest;
+use App\Services\PostService;
 
 class PostController extends Controller
 {
-    public function __construct()
+    private $postService;
+    
+    public function __construct(PostService $postService)
     {
+        $this->postService = $postService;
         $this->middleware('auth', ['except' => ['index', 'noneCategory', 'show', 'download']]);
     }
 
@@ -51,12 +55,7 @@ class PostController extends Controller
     
     public function store(PostRequest $request)
     {
-        $post = new Post();
-        $post->fill($request->all());
-        $post->user_id = Auth::user()->id;
-        $post->category_id = $request->get('category');
-        $post->save();
-
+        $post = $this->postService->create($request);
         $post->uploadFile($request->file('upload_file'));
         
         return redirect()->route('category.show', ['slug' => $post->category->slug]);

@@ -6,11 +6,15 @@ use App\Category;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryRequest;
+use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
-    public function __construct()
+    private $categoryService;
+    
+    public function __construct(CategoryService $categoryService)
     {
+        $this->categoryService = $categoryService;
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
     
@@ -38,10 +42,7 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $category = new Category();
-        $category->fill($request->all());
-        $category->user_id = Auth::user()->id;
-        $category->save();
+        $this->categoryService->create($request);
         
         return redirect()->route('category.index');
     }
