@@ -25,9 +25,7 @@ class SessionMiddleware
         $attributes['browser'] = $agent->browser();
         
         if (UserSession::where('session_id', $attributes['session_id'])->count() == 0) {
-            $session = new UserSession();
-            $session->fill($attributes);
-            $session->save();
+            UserSession::create($attributes);
         }
         
         return $next($request);

@@ -27,7 +27,6 @@ class Post extends Model
         return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC');
     }
 
-
     public function sluggable()
     {
         return [

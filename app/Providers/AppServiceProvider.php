@@ -20,19 +20,18 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         
         Validator::extend('username', function($attribute, $value, $parameters, $validator) {
-            if(!empty($value) && preg_match('/^([A-ZА-ЯІЇЄЁ][a-zа-яіїєё]*)\ ([A-ZА-ЯІЇЄЁ][a-zа-яіїєё]*)$/u', $value) == 1)
-            {
+            if (!empty($value) && preg_match('/^([A-ZА-ЯІЇЄЁ][a-zа-яіїєё]*)\ ([A-ZА-ЯІЇЄЁ][a-zа-яіїєё]*)$/u', $value) == 1) {
                 return true;
             }
             
             return false;
         });
         
-        view()->composer('pages._categories', function($view){
+        view()->composer('pages._categories', function($view) {
             $view->with('categoriesList', Category::all());
         });
         
-        view()->composer('layout', function($view){
+        view()->composer('layout', function($view) {
             $view->with('browsersList', UserSession::getBrowsersCount());
         });
     }
